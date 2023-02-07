@@ -1,0 +1,10 @@
+---
+packages_to_be_installed:
+  - ca-certificates
+  - apt-transport-https
+  - python3
+  - python3-pip
+  - python3-venv
+  - curl
+  - unzip
+  - bridge-utils

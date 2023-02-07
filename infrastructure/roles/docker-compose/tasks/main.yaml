@@ -1,0 +1,10 @@
+---
+- include_vars: ../vars/main.yaml
+    
+- name: install docker-compose
+  pip:
+    name: "{{ pip_packages_to_be_installed }}"
+    state: present
+  register: res
+  failed_when: false
+  changed_when: false

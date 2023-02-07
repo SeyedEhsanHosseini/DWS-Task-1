@@ -1,0 +1,22 @@
+---
+old_packages_to_be_removed:
+  - docker
+  - docker-engine
+  - docker.io
+  - containerd
+  - runc
+  
+required_packages_to_be_installed:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  
+docker_packages_to_be_installed:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  
+pip_packages_to_be_installed:
+  - docker  

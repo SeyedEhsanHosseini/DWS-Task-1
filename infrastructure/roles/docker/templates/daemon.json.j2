@@ -1,0 +1,5 @@
+{
+	"hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"],
+    "live-restore": true,
+    "insecure-registries": ["{{ ansible_default_ipv4.address }}:5000"]
+}

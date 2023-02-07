@@ -1,0 +1,15 @@
+all:
+  children:
+    maas_instance:
+      hosts:
+        node011.maas:
+          ansible_host: 192.168.56.32
+          ansible_user: ubuntu
+          machine_hostname: node011
+          machine_id: a6ft8x
+  hosts:
+    node011.maas:
+      ansible_host: 192.168.56.32
+      ansible_user: ubuntu
+      machine_hostname: node011
+      machine_id: a6ft8x

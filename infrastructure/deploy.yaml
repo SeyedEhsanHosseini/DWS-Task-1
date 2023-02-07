@@ -1,0 +1,11 @@
+---
+- hosts: maas_instance
+  pre_tasks:
+    - name: Update repositories cache
+      apt:
+        update_cache: yes
+  roles:
+    - system
+    - docker
+    - docker-compose
+          

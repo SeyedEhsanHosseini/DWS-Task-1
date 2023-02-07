@@ -1,0 +1,12 @@
+---    
+- include_vars: ../vars/main.yaml
+
+- name: update apt and upgrade system
+  apt:
+    update_cache: yes
+    upgrade: yes
+    
+- name: install required packages
+  apt:
+    name: "{{ packages_to_be_installed }}"
+    state: present     

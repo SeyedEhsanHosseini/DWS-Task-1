@@ -1,0 +1,87 @@
+---
+- include_vars: ../vars/main.yaml
+
+- name: remove old packages
+  apt:
+    name: "{{ old_packages_to_be_removed }}"
+    state: absent
+
+- name: install required packages
+  apt:
+    name: "{{ required_packages_to_be_installed }}"
+    state: present
+    
+- name: adding docker repository key
+  apt_key: 
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+    
+- name: adding docker package repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_facts.lsb.codename }} stable
+        
+- name: install docker
+  apt:
+    name: "{{ docker_packages_to_be_installed }}"
+    state: present       
+    
+- name: install docker python package
+  pip:
+    name: "{{ pip_packages_to_be_installed }}"
+    state: present
+  register: res
+  failed_when: false
+  changed_when: false     
+
+- name: create /etc/systemd/system/docker.service.d
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: '0755'
+
+- name: Copy docker.conf file
+  copy:
+    src: docker.conf
+    dest: /etc/systemd/system/docker.service.d/docker.conf
+    mode: '0755'
+
+- name: create .docker directory
+  file:
+    path: ~/.docker
+    state: directory
+    mode: '0755'
+
+- name: Copy config.json file
+  copy:
+    src: config.json
+    dest: ~/.docker
+    mode: '0755'
+
+- name: create /etc/docker
+  file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+    
+- name: copy docker daemon.json.j2 file
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  notify: 
+    - restart docker
+
+- name: Log into DockerHub using a config file
+  docker_login:
+    username: seyedehsanhosseini
+    password: Dockerhub@2110633573
+    config_path: ~/.docker/config.json
+    
+- name: pull registry base images
+  docker_image:
+    name: registry:2
+    source: pull
+ 
+- name: pull python base images
+  docker_image:
+    name: python:3.9.2-slim-buster
+    source: pull
