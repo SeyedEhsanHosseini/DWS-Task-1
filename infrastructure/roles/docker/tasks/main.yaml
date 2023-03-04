@@ -70,11 +70,10 @@
   notify: 
     - restart docker
 
-- name: Log into DockerHub using a config file
+- name: Log into DockerHub
   docker_login:
     username: seyedehsanhosseini
     password: Dockerhub@2110633573
-    config_path: ~/.docker/config.json
     
 - name: pull registry base images
   docker_image:
